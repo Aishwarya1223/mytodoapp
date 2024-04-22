@@ -1,0 +1,9 @@
+*{
+    margin:0;
+    font-size: 15px;
+}
+.mybtn {
+    display: inline-flex; /* Make .mybtn a flex container */
+    justify-content: end; /* Align items to the end of the main axis */
+    
+}

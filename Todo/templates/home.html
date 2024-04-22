@@ -1,6 +1,67 @@
 {% extends 'base.html' %}
-{%block content%}
-<div>
-    <p>This is the home page</p>
+
+{% block content %}
+<div class='fs-1 fw-bolder text-black text-center'>Task List</div>
+<div class='fs-2 fw-bolder text-black' style='margin-left: 70px'>Date</div>
+<div class='fs-3 text-black' style='margin-left: 70px'>{{ tasks.0.today_date|date:"d F Y" }}</div>
+<div class='container w-100 ms-5 mt-5' style='font-size: 15px'>
+    <div class='row'>
+        <div class='col-lg-7'> <!-- Increased the width of the first column to 8 out of 12 columns -->
+                <div class='fs-3 text-primary fw-bold'> To Do List</div>
+                {% for task in tasks %}
+                
+                {% if task.is_completed == False %}
+                <div class='mx-2 my-1 p-2' style='overflow-x:auto; overflow-y:auto; max-height: 400px;'>
+                <div class='card d-block mb-1 p-3'>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <p class="m-0 fw-bolder text-danger">{{ task.task }}</p>
+                        <div class="d-flex align-items-center">
+                                
+                                <button class='btn btn-primary me-2'>Mark as completed</button>
+                           
+                            <button class='btn btn-danger me-2'>Delete</button>
+                            <button class='btn btn-secondary'>Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                {% endif %}
+            
+                {% endfor %}
+            
+        </div>
+        <div class='col-lg-4'> <!-- Assigned the remaining width to the second column -->
+            
+            <div class='ms-5 w-100 '>
+                <div class='text-success fw-bolder fs-3'>Completed task</div><br>
+                    <div class=' d-flex justify-content-between ms-3 me-5 text-primary fw-bold'>
+                        <div>Task</div>
+                        <div>Date</div>
+                    </div>
+                    {% for i in tasks %}
+                        {%if i.is_completed == True %}
+                        <div class='mx-2 my-2'>
+                            <div class='card p-2'>
+                                <div class='card-body'>
+                                    <div class='text-success fw-bolder d-flex justify-content-between'>
+                                        <div>{{ i.task }}</div>
+                                        <div>{{ i.updated_at|date:"d F Y" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {%endif%}
+                    {%endfor%}
+                
+            </div>
+        </div>
+    </div>
+    <div class='row'>
+        <form method='POST' action="{% url 'addTask' %}">
+            {% csrf_token %}
+            <input name='task' class='form-control d-inline-block w-50 mx-2 my-2 p-2 ' style='height:55px; ' type='text' name='newTask' placeholder='Add a new task...'>
+            <button type='submit' class='btn btn-success ' style='width:70px;height:55px'>Add</button>
+        </form>
+    </div>
 </div>
-{%endblock%}
+{% endblock %}
