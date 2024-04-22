@@ -16,11 +16,9 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <p class="m-0 fw-bolder text-danger">{{ task.task }}</p>
                         <div class="d-flex align-items-center">
-                                
-                                <button class='btn btn-primary me-2'>Mark as completed</button>
-                           
-                            <button class='btn btn-danger me-2'>Delete</button>
-                            <button class='btn btn-secondary'>Edit</button>
+                            <a href="{% url 'mark_as_done' task.id %} " class='btn btn-primary me-2'>Mark as completed</a>
+                            <a href="{% url 'deleteTask' task.id %}" class='btn btn-danger me-2'>Delete</a>
+                            <a href="{% url 'editTask' task.id %}" class='btn btn-secondary me-2'>Edit</a>
                         </div>
                     </div>
                 </div>
@@ -30,13 +28,14 @@
                 {% endfor %}
             
         </div>
-        <div class='col-lg-4'> <!-- Assigned the remaining width to the second column -->
+        <div class='col-lg-5'> <!-- Assigned the remaining width to the second column -->
             
             <div class='ms-5 w-100 '>
                 <div class='text-success fw-bolder fs-3'>Completed task</div><br>
                     <div class=' d-flex justify-content-between ms-3 me-5 text-primary fw-bold'>
                         <div>Task</div>
                         <div>Date</div>
+                        <div>Undo</div>
                     </div>
                     {% for i in tasks %}
                         {%if i.is_completed == True %}
@@ -46,8 +45,10 @@
                                     <div class='text-success fw-bolder d-flex justify-content-between'>
                                         <div>{{ i.task }}</div>
                                         <div>{{ i.updated_at|date:"d F Y" }}</div>
+                                        <a href="{% url 'mark_undo' i.id %}" class='btn btn-info text-light me-2'>Mark Undo</a>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                         {%endif%}

@@ -1,0 +1,13 @@
+{%extends 'base.html' %}
+{%block content%}
+
+<div class='container d-block'>
+    <form method="post" action="{% url 'editTask' task.id %}">
+        {%csrf_token%}
+        <input type="text" name="task" value="{{task.task}}" />
+        
+       <button type="submit" name="edit"> Submit </button>
+    </form>
+</div>
+
+{%endblock%}
